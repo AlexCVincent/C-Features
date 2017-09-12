@@ -28,7 +28,7 @@ namespace TowerDilfense
         void OnTriggerEnter(Collider col)
         {
             //LET e = col's Enemy component
-            e = col.GetComponent<Enemy>();
+            Enemy e = col.GetComponent<Enemy>();
             // IF e != null
                 //CALL e.DealDamage(damage)
                 //Destroy gameObject

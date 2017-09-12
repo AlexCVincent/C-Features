@@ -8,7 +8,7 @@ namespace TowerDilfense
     {
         public float health = 100f;
         // Use this for initialization
-        public void takeDamage()
+        public void TakeDamage(float damage)
         {
             //SET health -= damage
             health -= damage;
