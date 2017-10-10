@@ -43,6 +43,14 @@ namespace Minesweeper2D
             }
         }
 
+		/*public void flag()
+		{
+			if (isRevealed == false) 
+			{
+				rend.sprite = mineSprites
+			}
+		}*/
+
         // Update is called once per frame
         void Update()
         {

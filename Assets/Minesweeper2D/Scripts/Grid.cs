@@ -52,6 +52,90 @@ namespace Minesweeper2D
             return count;
         }
 
+		public void FFuncover(int x, int y, bool[,] visited)
+		{
+			if(x >= 0 && y>= 0 && x < width && y < height)
+			{
+				if (visited[x, y])
+				{
+					return;
+				}
+				Tile tile = tiles[x, y];
+				int adjacentMines = GetAdjacentMineCountAt(tile);
+				tile.Reveal(adjacentMines);
+
+				if(adjacentMines > 0)
+				{
+					return;
+				}
+
+				visited[x, y] = true;
+
+				FFuncover(x-1, y, visited);
+				FFuncover(x + 1, y, visited);
+				FFuncover(x, y - 1, visited);
+				FFuncover(x, y + 1, visited);
+			}
+			}
+
+		public void UncoverMines(int mineState)
+		{
+            
+			for(int x = 0; x < width; x++)
+			{
+				for (int y = 0; y < height; y++)
+				{
+					Tile currentTile = tiles[x, y];
+					if (currentTile.isMine) 
+					{
+						int adjacentMines = GetAdjacentMineCountAt (currentTile);
+						currentTile.Reveal (adjacentMines, mineState);
+					}
+				}
+			}
+		}
+
+		bool NoMoreEmptyTiles()
+		{
+			int emptyTileCount = 0;
+			for(int x = 0; x < width; x++)
+			{
+				for (int y = 0; y < height; y++)
+				{
+					Tile currentTIle = tiles [x, y];
+					if(!currentTIle.isRevealed && !currentTIle.isMine)
+					{
+						emptyTileCount++;
+					}
+					
+				}
+                
+            }
+            return emptyTileCount == 0;
+        }
+
+		public void SelectTile(Tile selectedTile)
+		{
+			int adjacentMines = GetAdjacentMineCountAt (selectedTile);
+			selectedTile.Reveal (adjacentMines);
+			if (selectedTile.isMine) 
+			{
+				UncoverMines(0);
+				//Put gameover challenge here
+			}
+			else if(adjacentMines == 0)
+			{
+				int x = selectedTile.x;
+				int y = selectedTile.y;
+				FFuncover(x, y, new bool[width, height]);
+			}
+			if(NoMoreEmptyTiles())
+			{
+				UncoverMines(1);
+				//Put win challenge here
+			}
+		}
+
         void GenerateTiles()
         {
             //Create new 2D array of size width x height
@@ -90,16 +174,19 @@ namespace Minesweeper2D
         // Update is called once per frame
         void Update()
         {
-            
-            //LET mouseRay = Camera ScreenPointToRay mousePosition
-       Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-            //LET hit = Physics2D Raycast from mouse ray
-            RaycastHit2D hit =
-            //IF hit collider != null
-                // LET hitTile = hit collider's Tile component
-                // IF hitTile != null
-                    //LET adjacentMines = GetAdjacentMineCountAt hitTile
-                    //CALL hitTile.Reveal(adjacentMines)
+			if (Input.GetKeyDown (KeyCode.Mouse0)) 
+			{
+				Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+				RaycastHit2D hit = Physics2D.Raycast (ray.origin, ray.direction);
+				if (hit.collider != null) 
+				{
+					Tile hitTile = hit.collider.GetComponent<Tile> ();
+					if (hitTile != null) 
+					{
+						SelectTile (hitTile);
+					}
+				}
+			}
         }
     }
 }

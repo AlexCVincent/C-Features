@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 44e3a7c3a39bdff468bd7bb15d9303fb
-timeCreated: 1504740549
+timeCreated: 1505348697
 licenseType: Pro
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - aiAgentPrefab: {fileID: 1718378927467176, guid: 8e135374f40dc854bb96438cb28bca7f,
+      type: 2}
+  - target: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

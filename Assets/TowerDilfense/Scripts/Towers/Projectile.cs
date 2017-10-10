@@ -30,11 +30,19 @@ namespace TowerDilfense
             //LET e = col's Enemy component
             Enemy e = col.GetComponent<Enemy>();
             // IF e != null
+            if (e != null)
+            {
                 //CALL e.DealDamage(damage)
+                e.TakeDamage(damage);
                 //Destroy gameObject
-
+                Destroy(gameObject);
+            }
             //IF col's name == "Ground"
+            if (col.name == "Ground")
+            {
                 //Destroy the projectile
+                Destroy(gameObject);
+            }
         }
     }
 }
