@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+
 namespace AI
-{
+{ 
     public class AIAgent : MonoBehaviour
     {
         public Vector3 force;
@@ -53,11 +55,18 @@ namespace AI
         void ApplyVelocity()
         {
             //SET velocity = velocity + force * deltatime
+            velocity = velocity + force * Time.deltaTime;
             //IF velocity's magnitude > maxVelocity
+            if (velocity.magnitude > maxVelocity)
                 //SET velocity = mormalised velocity * maxVelocity
+                velocity = velocity.normalized * maxVelocity;
             // IF velocity's magnitude > 0
-                // SET transform.position = transform.position + velocity * delta time
-                //SET transform.rotation = Quaternion LookRotation (velocity)
+            if (velocity.magnitude > 0)
+                transform.position = transform.position + velocity * Time.deltaTime;
+            // SET transform.position = transform.position + velocity * delta time
+            transform.position = transform.position + velocity * Time.deltaTime;
+            //SET transform.rotation = Quaternion LookRotation (velocity)
+            transform.rotation = Quaternion.LookRotation(velocity);
         }
 
         void Update()

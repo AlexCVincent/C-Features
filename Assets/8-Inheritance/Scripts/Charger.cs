@@ -11,9 +11,15 @@ namespace Inheritance
         public float knockBack = 5f;
 
         public Rigidbody reggie;
-        public override void Attack()
+
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+        protected override void Attack()
         {
             // Add force to self
+            base.Attack();
         }
 
         void OnCollisionEnter(Collision col)
