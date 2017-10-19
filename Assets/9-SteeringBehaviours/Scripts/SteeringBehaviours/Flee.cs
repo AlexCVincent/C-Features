@@ -7,7 +7,7 @@ using GGL;
 namespace AI
 {
     [RequireComponent(typeof(AIAgent))]
-    public class Seek : SteeringBehaviour
+    public class Flee : SteeringBehaviour
     {
         public Transform target;
         public float stoppingDistance = 1f;
@@ -57,7 +57,7 @@ namespace AI
             }
 
             //LET desiredforce = target position - transform position
-            Vector3 desiredForce = target.position - transform.position;
+            Vector3 desiredForce = transform.position - target.position;
 
             //IF desiredForce magnitude  > stoppingDistance
             if (desiredForce.magnitude > stoppingDistance)
@@ -80,6 +80,6 @@ namespace AI
             //Return force
             return;
         }
-        }
-
     }
+
+}
